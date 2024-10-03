@@ -18,6 +18,7 @@ const nodeTypes = {
   customNode: CustomNode,
 };
 
+
 // Define the initial nodes with custom styles
 const initialNodes = [
   // Phase 1: Starting and Initial Upgrades
@@ -136,14 +137,14 @@ const initialNodes = [
   },
   {
     id: '19',
-    data: { label: 'Unlock Region 3 (Gar\'Kura)\nMithrag Marks Market Unlocked' },
+    data: { label: 'Unlock Region 3 (Gar\'Kura)\nMithrag Marks Market Unlocked, Scanner Unlocked' },
     position: { x: 300, y: 1550 },
     style: { backgroundColor: '#10B981', color: '#fff' },
   },
   {
     id: '20',
     data: { label: 'Mithrag Marks Market:\nTrade Crystals & Marks' },
-    position: { x: 300, y: 1650 },
+    position: { x: 300, y: 1680 },
     style: { backgroundColor: '#6EE7B7', color: '#000' },
   },
   {
@@ -172,7 +173,48 @@ const initialNodes = [
     position: { x: 300, y: 2050 },
     style: { backgroundColor: '#EF4444', color: '#fff' },
   },
-];
+  {
+    id: '25',
+    data: { label: 'Unlock Liquidity Pool Trading Market' },
+    position: { x: 600, y: 1550 },
+    style: { backgroundColor: '#8B5CF6', color: '#fff' }, // Tailwind Purple
+  },
+  {
+    id: '26',
+    data: { label: 'Access In-Game Trading Interface\n(Liquidity Pool)' },
+    position: { x: 600, y: 1650 },
+    style: { backgroundColor: '#A78BFA', color: '#fff' },
+  },
+  {
+    id: '27',
+    data: { label: 'Trade Crystals ↔ Marks\nPrices Adjust Based on Supply/Demand' },
+    position: { x: 600, y: 1750 },
+    style: { backgroundColor: '#C4B5FD', color: '#000' },
+  },
+  {
+    id: '28',
+    data: { label: 'Use Marks for Advanced Upgrades' },
+    position: { x: 600, y: 1850 },
+    style: { backgroundColor: '#FBBF24', color: '#fff' },
+  },
+  {
+    id: '29',
+    data: { 
+      label: 'Note: All currencies (Crystals & Marks) are fictional.\nNo blockchain or real-world value.\nPurely for in-game progression and fun!' 
+    },
+    position: { x: 900, y: 1000 },
+    style: { 
+      backgroundColor: '#EF4444', 
+      color: '#fff',
+      padding: '20px',
+      borderRadius: '10px',
+      maxWidth: '300px',
+      textAlign: 'center',
+      fontSize: '14px',
+      fontWeight: 'bold'
+    },
+  },
+];  
 
 // Define the initial edges with custom styles
 const initialEdges = [
@@ -208,7 +250,15 @@ const initialEdges = [
   { id: 'e21-22', source: '21', target: '22', type: 'smoothstep', animated: true },
   { id: 'e22-23', source: '22', target: '23', type: 'smoothstep', animated: true },
   { id: 'e23-24', source: '23', target: '24', type: 'smoothstep', animated: true },
+  // New Edges for Liquidity Pool Trading Market
+  { id: 'e19-25', source: '19', target: '25', type: 'smoothstep', animated: true },
+  { id: 'e25-26', source: '25', target: '26', type: 'smoothstep', animated: true },
+  { id: 'e26-27', source: '26', target: '27', type: 'smoothstep', animated: true },
+  { id: 'e27-28', source: '27', target: '28', type: 'smoothstep', animated: true },
+  { id: 'e28-21', source: '28', target: '21', type: 'smoothstep', animated: true },
+  { id: 'e25-29', source: '25', target: '29', type: 'smoothstep', animated: true, style: { stroke: '#EF4444' } },
 ];
+
 
 const FlowChart = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -218,6 +268,7 @@ const FlowChart = () => {
   const onNodeClick = useCallback((event, node) => {
     alert(`You clicked on node: ${node.data.label}`);
   }, []);
+
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
@@ -250,6 +301,8 @@ const FlowChart = () => {
                 return '#34D399'; // Start Node
               case '24':
                 return '#EF4444'; // End Node
+              case '29':
+                return '#EF4444'; // Explanation Node
               default:
                 return '#ccc';
             }
@@ -259,5 +312,6 @@ const FlowChart = () => {
     </motion.div>
   );
 };
+
 
 export default FlowChart;
